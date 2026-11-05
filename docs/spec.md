@@ -106,6 +106,8 @@ Dr. A, March, 4 cases:
   - A surgery, admission, or discharge date can't be read, or discharge is before admission.
 - When a drop fails, nothing from it is loaded and the dashboard keeps showing its previous data.
   A plain-text or CSV report listing every problem is written next to the dropped files.
+- A drop that repeats an already-loaded month or case ID fails. To correct a month on purpose,
+  the person loading it asks for a replace, which swaps that month's cases for the new ones.
 - Not checked, by choice: text or blanks in number columns, negative values, a "died" flag that
   isn't yes/no, and surgery dates outside the expected month.
 
@@ -129,7 +131,6 @@ Dr. A, March, 4 cases:
 - Exact column names and types in each file. Check with whoever does the exports.
 - Which SSO provider (e.g. Microsoft Entra, Okta).
 - Where on each tab the data-as-of date appears.
-- How a drop that repeats an already-loaded month or case should be handled.
 - Whether these items are out of scope or future ideas (not discussed): risk adjustment,
   CSV/Excel export, peer lines on charts, small-number warnings, an admin role, and a phone
   layout.

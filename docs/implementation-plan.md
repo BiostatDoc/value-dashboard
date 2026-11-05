@@ -74,11 +74,12 @@ Column rules:
 Entry point:
 
 ```r
-load_drop(drop_dir, db_path)
+load_drop(drop_dir, db_path, replace = FALSE)
 ```
 
-Run monthly with `Rscript inst/scripts/load_drop.R <drop_dir>`. It returns the problems tibble
-invisibly and exits with status 1 from the script when there are problems.
+Run monthly with `Rscript inst/scripts/load_drop.R <drop_dir>`. Add `--replace` to set
+`replace = TRUE`. It returns the problems tibble invisibly and exits with status 1 from the
+script when there are problems.
 
 Steps:
 
@@ -97,6 +98,32 @@ A drop fails when any of these is true (from the spec):
 - A clinical case has no matching row in the finance file.
 - A surgeon or procedure code is not in the lookup sheet.
 - A surgery, admission, or discharge date can't be read, or discharge is before admission.
+
+### Repeated months and case IDs
+
+A drop that repeats data already in the database fails by default. This catches the same folder
+being loaded twice, and the duplicate counting the spec is meant to fix.
+
+- With `replace = FALSE` (the default), the drop fails when:
+  - any of its surgery months already has cases in `cases` (rule `month_already_loaded`, one
+    problem per month), or
+  - any of its case IDs is already in `cases` (rule `case_already_loaded`, one problem per
+    case ID).
+- With `replace = TRUE`, the drop is a deliberate correction. Inside the same transaction, delete
+  every row in `cases` whose `surgery_month` is one of the drop's months, then insert the drop.
+  A case ID that is already loaded under a month **outside** the drop's months still fails with
+  `case_already_loaded`, because the case would be counted in two months.
+- In both modes the drop's own checks still run, and any failure loads nothing.
+- Each successful load adds a row to `drops`, so a replaced month shows up more than once there.
+
+Tests in `tests/testthat/test-load_drop.R`:
+
+- Loading `good-drop/` twice: the second load fails with `month_already_loaded` and
+  `case_already_loaded`, and the `cases` row count is unchanged.
+- Loading `good-drop/` twice with `replace = TRUE` the second time: succeeds, and the `cases`
+  row count equals the first load's.
+- A replace drop holding a case ID already loaded under another month fails, and nothing
+  changes.
 
 Not checked, by choice: text or blanks in number columns, negative values, a "died" flag that
 isn't yes/no, and surgery dates outside the expected month.
@@ -240,7 +267,5 @@ Each epic depends on the ones before it.
 - Exact column names and types in each export file.
 - Which SSO provider and which host.
 - Where on each tab the data-as-of date appears.
-- What happens when a drop repeats an already-loaded month or case ID. Proposed default: fail
-  the drop and list the repeats in the report. Confirm before writing the loading epic.
 - In scope or future: risk adjustment, CSV/Excel export, peer lines on charts, small-number
   warnings, an admin role, a phone layout.
