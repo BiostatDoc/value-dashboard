@@ -1,0 +1,11 @@
+^renv$
+^renv\.lock$
+^\.lintr$
+^Makefile$
+^docs$
+^\.github$
+^\.claude$
+^data-raw$
+^\.Renviron.*$
+^tools$
+^LICENSE\.md$

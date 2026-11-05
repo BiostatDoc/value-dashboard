@@ -1,0 +1,36 @@
+Package: valuedashboard
+Title: Surgeon Value Dashboard
+Version: 0.0.0.9000
+Authors@R: person("BiostatDoc", role = c("aut", "cre"))
+Description: A Shiny dashboard that shows surgeons their value metrics against their peers.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+Depends:
+    R (>= 4.6.0)
+Imports:
+    bslib,
+    cli,
+    DBI,
+    dplyr,
+    duckdb,
+    ggplot2,
+    lubridate,
+    reactable,
+    readr,
+    readxl,
+    rlang,
+    shiny,
+    tibble,
+    tidyr
+Suggests:
+    lintr,
+    roxygen2,
+    shinytest2,
+    styler,
+    testthat (>= 3.0.0),
+    usethis,
+    withr,
+    writexl
+Config/roxygen2/version: 8.1.1
