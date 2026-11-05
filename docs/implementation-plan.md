@@ -14,8 +14,14 @@ can point to it.
 - **Data handling:** dplyr (1.1+), tidyr, lubridate, cli, rlang.
 - **Development only:** testthat (3rd edition), shinytest2, styler, lintr, withr.
 
-The setup card creates `renv.lock`, which pins the exact version of every package. That card
-also copies the R and package versions into this section.
+`renv.lock` pins the exact version of every package. Pinned versions:
+
+- R 4.6.1
+- Imports: bslib 0.12.0, cli 3.6.6, DBI 1.3.0, dplyr 1.2.1, duckdb 2.0.0, ggplot2 4.0.3,
+  lubridate 1.9.5, reactable 0.4.5, readr 2.2.0, readxl 1.6.0, rlang 1.3.0, shiny 1.14.0,
+  tibble 3.3.1, tidyr 1.3.2
+- Development only: lintr 3.4.0, roxygen2 8.1.1, shinytest2 0.5.1, styler 1.11.0,
+  testthat 3.3.2, usethis 3.2.2, withr 3.0.3, writexl 2.0.1
 
 ## 2. Project layout
 
