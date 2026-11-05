@@ -1,0 +1,5 @@
+VD_DB_PATH=data/value-dashboard.duckdb
+VD_DROP_DIR=C:/path/to/shared/drops
+VD_USER_HEADER=X-Forwarded-Email
+VD_DEV_USER_EMAIL=dr.a@example.org
+VD_ENV=development
